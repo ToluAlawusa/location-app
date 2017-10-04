@@ -4,26 +4,30 @@ let markers = new Map();
 $(document).ready(function(){
     var socket = io('/');
 
+    // socket.on('trackerDisconnected', id => {
+    //     console.log('disconnected', id)
+    //     if(markers.has(id)){
+    //         var marker = markers.get(id)
+    //         marker.setMap(null)
+    //         markers.delete(id)
+    //     }
+    // })
+
     socket.on('locationsUpdate', locations => {
         console.log(locations);
-        locations.forEach(([id, position]) => {
-            let marker = null
-            if(position.lat && position.lng){
+        markers.forEach((marker, id) => {
+            marker.setMap(null)
+            markers.delete(id)
+        })
 
-                marker = new google.maps.Marker({
+        locations.forEach(([id, position]) => {
+            if(position.lat && position.lng){
+                var marker = new google.maps.Marker({
                     position,
                     map,
-                    title: id
+                    title:id,
                 })
-            }
-
-
-
-            if(markers.has(id)){
-                var oldMarker = markers.get(id);
-                oldMarker.setMap(null);
-                markers.delete(id)
-                markers.set(id, marker)
+                markers.set(id, marker);
             }
 
         })

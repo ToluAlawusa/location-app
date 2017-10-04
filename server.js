@@ -116,18 +116,13 @@ app.use(function(err, req, res, next) {
 
 /*  starting up the socket connection       */
 io.on('connection', socket => {
+
     socket.on('registerTracker', () => {
         locationMap.set(socket.id, { lat: null, lng: null});
     })
 
     socket.on('updateLocation', pos => {
-
-        if(locationMap.has(socket.id)){
-
-            locationMap.set(socket.id, pos)
-            console.log(socket.id, pos)
-        }
-
+        locationMap.set(socket.id, pos)
     })
 
     socket.on('requestLocations', ()=> {
@@ -135,7 +130,11 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect', () => {
-        locationMap.delete(socket.id)
+        // if(locationMap.has(socket.id)){
+        //     console.log(socket.id, 'disconnected')
+        //     io.emit('trackerDisconnected', socket.id)
+            locationMap.delete(socket.id)
+        // }
     })
 })
 
