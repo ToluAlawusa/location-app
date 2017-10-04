@@ -2,16 +2,8 @@ let map;
 let markers = new Map();
 
 $(document).ready(function(){
-    var socket = io('/');
+    const socket = io('/');
 
-    // socket.on('trackerDisconnected', id => {
-    //     console.log('disconnected', id)
-    //     if(markers.has(id)){
-    //         var marker = markers.get(id)
-    //         marker.setMap(null)
-    //         markers.delete(id)
-    //     }
-    // })
 
     socket.on('locationsUpdate', locations => {
         console.log(locations);
@@ -22,7 +14,7 @@ $(document).ready(function(){
 
         locations.forEach(([id, position]) => {
             if(position.lat && position.lng){
-                var marker = new google.maps.Marker({
+                const marker = new google.maps.Marker({
                     position,
                     map,
                     title:id,
@@ -42,10 +34,10 @@ $(document).ready(function(){
 function initMap() {
 
     navigator.geolocation.getCurrentPosition(pos => {
-        var {latitude : lat, longitude : lng } = pos.coords;
+        const {latitude : lat, longitude : lng } = pos.coords;
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat, lng},
-            zoom: 8
+            zoom: 2
         });
 },
     err =>

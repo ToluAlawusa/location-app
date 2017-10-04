@@ -49,3 +49,12 @@
 //         }
 //     })
 // })
+
+// socket.on('trackerDisconnected', id => {
+//     console.log('disconnected', id)
+//     if(markers.has(id)){
+//         var marker = markers.get(id)
+//         marker.setMap(null)
+//         markers.delete(id)
+//     }
+// })

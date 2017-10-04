@@ -1,19 +1,17 @@
 $(document).ready(function(){
 
-    var socket = io('/');
+    const socket = io('/');
     socket.emit('registerTracker')
 
-
-
-    var positionOptions = {
+    const positionOptions = {
         enableHighAccuracy: true,
         maximumAge: 0
     };
 
     setInterval(() => {
-        console.log('tick')
+        //console.log('tick')
         navigator.geolocation.getCurrentPosition(pos => {
-        var {latitude : lat, longitude : lng } = pos.coords;
+        const {latitude : lat, longitude : lng } = pos.coords;
         socket.emit('updateLocation', {lat, lng})
         },
             err =>
@@ -23,7 +21,5 @@ $(document).ready(function(){
             positionOptions
         )
     }, 2000)
-
-
 });
 
